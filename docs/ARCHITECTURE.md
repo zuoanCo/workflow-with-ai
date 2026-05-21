@@ -1,4 +1,6 @@
-# Workflow AI 技术方案 v0.1
+# Workflow AI 技术方案 v1.0
+
+状态：已迁移为正式设计方案，详见 `docs/DESIGN.md`。本文保留为架构摘要。
 
 ## 总体架构
 
