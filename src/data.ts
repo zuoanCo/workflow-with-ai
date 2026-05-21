@@ -19,6 +19,9 @@ import {
   Workflow,
 } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
+import { roleDefinitions } from './domain/rbac'
+import type { RoleDefinition } from './domain/rbac'
+import { workflowRun, workflowNodeStatusLabels } from './domain/workflow'
 
 export type Metric = {
   label: string
@@ -32,21 +35,6 @@ export type Module = {
   summary: string
   icon: LucideIcon
   accent: string
-}
-
-export type Deliverable = {
-  title: string
-  channel: string
-  owner: string
-  state: '已发布' | '待审核' | '生成中' | '需返修'
-  quality: number
-}
-
-export type Role = {
-  name: string
-  scope: string
-  permissions: string[]
-  risk: '低' | '中' | '高'
 }
 
 export type Platform = {
@@ -90,33 +78,7 @@ export const modules: Module[] = [
   },
 ]
 
-export const roles: Role[] = [
-  {
-    name: 'Owner',
-    scope: '组织级',
-    permissions: ['账户管理', '密钥管理', '计费与监控', '发布审批'],
-    risk: '高',
-  },
-  {
-    name: 'Producer',
-    scope: '项目级',
-    permissions: ['创建工作流', '提交成果', '查看项目数据'],
-    risk: '中',
-  },
-  {
-    name: 'Reviewer',
-    scope: '成果级',
-    permissions: ['内容审核', '质量评分', '退回返修'],
-    risk: '低',
-  },
-]
-
-export const deliverables: Deliverable[] = [
-  { title: 'LibTV 风格短剧海报 A/B', channel: '小红书 / 抖音', owner: '少闲儿', state: '待审核', quality: 92 },
-  { title: '空性 vs 张无忌分镜视频', channel: '视频号', owner: '导演 Jime', state: '生成中', quality: 87 },
-  { title: 'AI 工作流创业报告封面', channel: '公众号', owner: 'Lisen', state: '已发布', quality: 96 },
-  { title: '社区首页导航改版素材', channel: 'Web', owner: '小笼包UI', state: '需返修', quality: 74 },
-]
+export const roles: RoleDefinition[] = roleDefinitions
 
 export const platforms: Platform[] = [
   { name: 'Web App', target: 'Vite SPA / SSR 可升级', status: '已实现', coverage: '桌面 + 移动端' },
@@ -130,50 +92,58 @@ export const workflowNodes: Node[] = [
     id: 'brief',
     type: 'input',
     position: { x: 0, y: 90 },
-    data: { label: '创作 Brief' },
+    data: { label: `创作 Brief · ${workflowNodeStatusLabels.succeeded}` },
     style: { border: '1px solid #94a3b8', borderRadius: 12, padding: 12, background: '#f8fafc' },
   },
   {
+    id: 'prompt',
+    position: { x: 210, y: 90 },
+    data: { label: `提示词模板 · ${workflowNodeStatusLabels.succeeded}` },
+    style: { border: '1px solid #bae6fd', borderRadius: 12, padding: 12, background: '#f0f9ff' },
+  },
+  {
     id: 'chat',
-    position: { x: 210, y: 20 },
-    data: { label: 'AI 对话策划' },
+    position: { x: 420, y: 20 },
+    data: { label: `AI 对话策划 · ${workflowNodeStatusLabels.succeeded}` },
     style: { border: '1px solid #93c5fd', borderRadius: 12, padding: 12, background: '#eff6ff' },
   },
   {
     id: 'image',
-    position: { x: 420, y: 20 },
-    data: { label: '生图批处理' },
+    position: { x: 650, y: 20 },
+    data: { label: `生图批处理 · ${workflowNodeStatusLabels.succeeded}` },
     style: { border: '1px solid #fdba74', borderRadius: 12, padding: 12, background: '#fff7ed' },
   },
   {
     id: 'video',
-    position: { x: 420, y: 160 },
-    data: { label: '生视频渲染' },
+    position: { x: 650, y: 160 },
+    data: { label: `生视频渲染 · ${workflowNodeStatusLabels.succeeded}` },
     style: { border: '1px solid #c4b5fd', borderRadius: 12, padding: 12, background: '#f5f3ff' },
   },
   {
     id: 'review',
-    position: { x: 650, y: 90 },
-    data: { label: '人工审核' },
+    position: { x: 880, y: 90 },
+    data: { label: `人工审核 · ${workflowNodeStatusLabels.waiting_review}` },
     style: { border: '1px solid #86efac', borderRadius: 12, padding: 12, background: '#f0fdf4' },
+  },
+  {
+    id: 'asset',
+    position: { x: 1110, y: 90 },
+    data: { label: `资产转码归档 · ${workflowNodeStatusLabels.blocked}` },
+    style: { border: '1px solid #cbd5e1', borderRadius: 12, padding: 12, background: '#f8fafc' },
   },
   {
     id: 'publish',
     type: 'output',
-    position: { x: 880, y: 90 },
-    data: { label: '多平台打包' },
+    position: { x: 1340, y: 90 },
+    data: { label: `多平台打包 · ${workflowNodeStatusLabels.blocked}` },
     style: { border: '1px solid #64748b', borderRadius: 12, padding: 12, background: '#f8fafc' },
   },
 ]
 
-export const workflowEdges: Edge[] = [
-  { id: 'brief-chat', source: 'brief', target: 'chat', animated: true },
-  { id: 'chat-image', source: 'chat', target: 'image' },
-  { id: 'chat-video', source: 'chat', target: 'video' },
-  { id: 'image-review', source: 'image', target: 'review' },
-  { id: 'video-review', source: 'video', target: 'review' },
-  { id: 'review-publish', source: 'review', target: 'publish', animated: true },
-]
+export const workflowEdges: Edge[] = workflowRun.edges.map((edge) => ({
+  ...edge,
+  animated: edge.target === 'review' || edge.target === 'publish',
+}))
 
 export const architecture = [
   { title: '身份与租户', detail: '组织、成员、角色、权限策略、审计日志。', icon: UsersRound },

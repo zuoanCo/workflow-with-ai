@@ -34,17 +34,17 @@
 
 - [x] 开发任务拆解：2026-05-21 16:40，按 PRD v1.0 与 DESIGN v1.0 输出 `docs/DEVELOPMENT_PLAN.md`，Lisen 基于 CEO 已授权阶段门禁代审批记录确认可执行。
 - [x] 仓库分支策略与 PR 规则：2026-05-21 16:50，新增 `docs/BRANCH_AND_PR_RULES.md` 与 `.github/PULL_REQUEST_TEMPLATE.md`；Lisen 基于 CEO 已授权阶段门禁代审批记录确认该治理规则属于阶段三开发准备首项，可执行。
-- [ ] 账户与权限模块开发。
-- [ ] 创作工作台开发。
-- [ ] AI 对话模块开发。
-- [ ] AI 生图模块开发。
-- [ ] AI 生视频模块开发。
-- [ ] 画布工作流模块开发。
-- [ ] 成果管理模块开发。
-- [ ] 数据监控模块开发。
-- [ ] 多平台打包能力开发。
-- [ ] 单元测试。
-- [ ] PR 提交。
+- [x] 账户与权限模块开发：2026-05-21 17:01，新增 `src/domain/rbac.ts` 领域规则、RBAC 单元测试和账户权限 UI 展示；Lisen 基于 CEO 已授权阶段三执行门禁确认该切片符合 `docs/DESIGN.md` 的 Auth/RBAC、项目授权与审计入口设计。
+- [x] 创作工作台开发：2026-05-21 17:17，新增 `src/domain/creation.ts` 创作模式、模板、生成历史领域模型，扩展工作台 UI 的模式切换、Prompt 编排、模型路由、审核策略、资产目标、模板入口和生成历史；Lisen 基于 CEO 已授权阶段三执行门禁确认该切片符合 `docs/DESIGN.md` 的 Creation Studio、Prompt 输入、模板库、模型参数与生成历史结构设计。
+- [x] AI 对话模块开发：2026-05-21 17:25，新增 `src/domain/chat.ts` 会话模型、提示词模板、模型路由与结果资产化边界，扩展工作台 AI 对话面板并补充单元测试；Lisen 基于 CEO 已授权阶段三执行门禁确认该切片符合 `docs/DESIGN.md` 的 AI 对话、Provider Adapter 边界和会话资产化设计。
+- [x] AI 生图模块开发：2026-05-21 17:36，新增 `src/domain/image.ts` 生图批次、参考图、风格模板、版本状态与审核摘要模型，扩展工作台 AI 生图面板并补充单元测试；Lisen 基于 CEO 已授权阶段三执行门禁确认该切片符合 `docs/DESIGN.md` 的 ImageGenerate、参考图、风格模板、批量生成、版本对比和 ReviewGate 审核流转设计。
+- [x] AI 生视频模块开发：2026-05-21 17:45，新增 `src/domain/video.ts` 生视频分镜、首尾帧、渲染队列、失败重试入口与审核目标模型，扩展工作台 AI 生视频面板并补充单元测试；Lisen 基于 CEO 已授权阶段三执行门禁确认该切片符合 `docs/DESIGN.md` 的 VideoGenerate、分镜、首尾帧、渲染队列、失败重试和 ReviewGate 审核流转设计。
+- [x] 画布工作流模块开发：2026-05-21 17:58，新增 `src/domain/workflow.ts` 工作流 DAG、拓扑执行顺序、ReviewGate 阻塞、节点重试与运行摘要领域模型，扩展画布 UI 展示节点运行记录、成本、耗时、审核与阻塞状态，并补充单元测试；Lisen 基于 CEO 已授权阶段三执行门禁确认该切片符合 `docs/DESIGN.md` 的 Workflow Canvas、DAG 节点、ReviewGate、失败重试、成本耗时追踪和成果归档前置设计。
+- [x] 成果管理模块开发：2026-05-21 18:09，新增 `src/domain/deliverable.ts` 成果状态、版本、返修记录、渠道交付包与审核入口领域模型，扩展成果管理 UI 展示版本、评分、审核人、返修计数和渠道包状态，并补充单元测试；Lisen 基于 CEO 已授权阶段三执行门禁确认该切片符合 `docs/DESIGN.md` 的 Deliverable、成果状态、版本、审核、返修和渠道打包记录设计。
+- [x] 数据监控模块开发：2026-05-21 18:14，新增 `src/domain/observability.ts` 成本、耗时、Provider 成功率、队列状态与审核风险领域模型，扩展总览数据监控 UI 并补充单元测试；Lisen 基于 CEO 已授权阶段三执行门禁确认该切片符合 `docs/DESIGN.md` 的 Observability、成本、耗时、成功率、风险命中和队列状态设计。
+- [x] 多平台打包能力开发：2026-05-21 18:26，新增 `src/domain/packaging.ts` 多平台打包适配器边界、渠道产物要求、阻塞原因与可打包判断，扩展多平台打包 UI 展示 Web、公众号、短视频、小红书、下载包状态，并补充单元与组件测试；Lisen 基于 CEO 已授权阶段三执行门禁确认该切片符合 `docs/DESIGN.md` 的多端打包、Channel Packaging Adapter、成果交付包与审核前置设计。
+- [x] 单元测试：2026-05-21 18:33，完成阶段三测试收口验证，覆盖领域逻辑与工作台关键组件交互，共 10 个测试文件、36 个用例通过；同步通过 `npm run lint` 与 `npm run build`。Lisen 基于 CEO 已授权阶段三执行门禁确认该测试收口符合 `docs/DEVELOPMENT_PLAN.md` 的“领域逻辑、组件、关键交互测试”验收口径。
+- [ ] PR 提交：2026-05-21 18:44，Lisen 基于 CEO 已授权阶段三执行门禁确认当前任务为阶段三第一个未完成项；已完成提交前验证 `npm run lint`、`npm run build`、`npm run test`，并已在本地分支 `feature/stage-three-workbench` 形成阶段三工作台提交。当前环境缺少 `gh` 命令，且未检测到 `GH_TOKEN`/`GITHUB_TOKEN`，暂无法直接创建 GitHub PR。下一小步：在具备 GitHub CLI 或等效凭证后推送阶段三 feature 分支并创建 PR。
 - [ ] 代码评审 approval。
 
 阶段门禁：PR 未获得 review approval，不得合入主分支。
