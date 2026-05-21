@@ -32,8 +32,8 @@
 
 ## 阶段三：开发（海飞丝FS主导）
 
-- [ ] 开发任务拆解。
-- [ ] 仓库分支策略与 PR 规则。
+- [x] 开发任务拆解：2026-05-21 16:40，按 PRD v1.0 与 DESIGN v1.0 输出 `docs/DEVELOPMENT_PLAN.md`，Lisen 基于 CEO 已授权阶段门禁代审批记录确认可执行。
+- [x] 仓库分支策略与 PR 规则：2026-05-21 16:50，新增 `docs/BRANCH_AND_PR_RULES.md` 与 `.github/PULL_REQUEST_TEMPLATE.md`；Lisen 基于 CEO 已授权阶段门禁代审批记录确认该治理规则属于阶段三开发准备首项，可执行。
 - [ ] 账户与权限模块开发。
 - [ ] 创作工作台开发。
 - [ ] AI 对话模块开发。
